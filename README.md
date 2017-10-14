@@ -1,2 +1,8 @@
-# otus-java-2017-10-zdrachek
-Otus Java developer course HW
+# Otus.ru Курс Java разработчик 
+
+Группа 2017-10
+
+### Студент
+Aliaksandr Zdrachak (Александр Здрачек)
+
+iscanderdrake@gmail.com
