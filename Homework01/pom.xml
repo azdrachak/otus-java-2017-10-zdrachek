@@ -23,8 +23,9 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <com.google.guava.version>23.0</com.google.guava.version>
         <maven.jar.plugin.version>3.0.2</maven.jar.plugin.version>
+        <proguard.version>5.3.3</proguard.version>
+        <proguard.maven.plugin.version>2.0.14</proguard.maven.plugin.version>
         <maven.shade.version>3.1.0</maven.shade.version>
-
     </properties>
 
     <dependencies>
@@ -51,6 +52,36 @@
                     </archive>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>com.github.wvengen</groupId>
+                <artifactId>proguard-maven-plugin</artifactId>
+                <version>${proguard.maven.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>proguard</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <obfuscate>true</obfuscate>
+                    <libs>
+                        <lib>${java.home}/lib/rt.jar</lib>
+                    </libs>
+                </configuration>
+
+                <dependencies>
+                    <!-- https://mvnrepository.com/artifact/net.sf.proguard/proguard-base -->
+                    <dependency>
+                        <groupId>net.sf.proguard</groupId>
+                        <artifactId>proguard-base</artifactId>
+                        <version>${proguard.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
