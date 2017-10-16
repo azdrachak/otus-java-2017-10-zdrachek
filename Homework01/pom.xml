@@ -14,7 +14,7 @@
     </developers>
 
     <groupId>com.github.azdrachak</groupId>
-    <artifactId>OtusMavenHW</artifactId>
+    <artifactId>Homework01</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
