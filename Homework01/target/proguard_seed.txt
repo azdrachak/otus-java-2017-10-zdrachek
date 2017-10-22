@@ -1,0 +1,3 @@
+Main
+Main: Main()
+Main: void main(java.lang.String[])
