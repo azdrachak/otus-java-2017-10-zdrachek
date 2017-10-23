@@ -1,7 +1,9 @@
 # Compiled class file
 *.class
 
+
 # Package Files #
+**/target
 *.jar
 *.war
 *.ear
