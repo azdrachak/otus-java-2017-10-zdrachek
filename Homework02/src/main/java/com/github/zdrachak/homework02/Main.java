@@ -8,7 +8,7 @@ public class Main {
         CalculateMemory calculator = new CalculateMemory(10_000_000, 5);
 
         System.out.print("Empty string size in bytes: ");
-        System.out.println(calculator.calculate(() -> new String("")));
+        System.out.println(calculator.calculate(() -> new String(new char[]{})));
 
         System.out.print("Empty Integer object size in bytes: ");
         System.out.println(calculator.calculate(IntegerClass::new));
