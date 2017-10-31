@@ -161,8 +161,14 @@ public class ArrayList<T> implements List<T> {
         return new ElementsIterator(index);
     }
 
+    @SuppressWarnings("unchecked")
     public List<T> subList(int fromIndex, int toIndex) {
-        return null;
+        if (fromIndex < 0 || toIndex > size) throw new IndexOutOfBoundsException();
+        List<T> sub = new ArrayList<>();
+        for (int i = fromIndex; i < toIndex; i++) {
+            sub.add((T) data[i]);
+        }
+        return sub;
     }
 
     private void ensureCapacity() {

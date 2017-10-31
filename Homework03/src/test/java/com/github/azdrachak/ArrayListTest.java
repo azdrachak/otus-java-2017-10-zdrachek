@@ -3,6 +3,7 @@ package com.github.azdrachak;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
@@ -304,8 +305,47 @@ public class ArrayListTest {
     }
 
     @Test
+    public void testRetainAllNoIntersect() throws Exception {
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        java.util.ArrayList<Integer> newList = new java.util.ArrayList<>();
+        newList.add(4);
+        newList.add(5);
+        newList.add(6);
+        boolean retained = list.retainAll(newList);
+        assertTrue("List size is 0", list.size() == 0);
+        assertTrue("Returned true", retained);
+    }
+
+    @Test
+    public void testRetainAllSameData() throws Exception {
+        list.add(1);
+        list.add(3);
+        list.add(3);
+        list.add(2);
+        java.util.ArrayList<Integer> newList = new java.util.ArrayList<>();
+        newList.add(1);
+        newList.add(2);
+        newList.add(3);
+        newList.add(1);
+        boolean retained = list.retainAll(newList);
+        assertTrue("List size is 4", list.size() == 4);
+        assertFalse("Returned false", retained);
+        assertTrue("Contains 1", list.containsAll(newList));
+    }
+
+    @Test
     public void testSubList() throws Exception {
-        assertTrue(false);
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        List<Integer> newList = new ArrayList<>();
+        newList = list.subList(1, 3);
+        assertTrue("Sublist has 2 elements", newList.size() == 2);
+        assertTrue("Sublist contains 2", newList.contains(2));
+        assertTrue("Sublist contains 3", newList.contains(3));
     }
 
     //Iterator tests
