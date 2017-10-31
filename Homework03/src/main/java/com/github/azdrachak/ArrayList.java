@@ -92,6 +92,14 @@ public class ArrayList<T> implements List<T> {
 
     public boolean retainAll(Collection<?> c) {
         boolean changed = false;
+        Object[] copy = new Object[size];
+        System.arraycopy(data, 0, copy, 0, size);
+        for (Object item : copy) {
+            if (!c.contains(item)) {
+                remove(item);
+                changed = true;
+            }
+        }
         return changed;
     }
 

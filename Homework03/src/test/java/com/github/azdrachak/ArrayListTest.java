@@ -286,7 +286,21 @@ public class ArrayListTest {
 
     @Test
     public void testRetainAll() throws Exception {
-        assertTrue(false);
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+        java.util.ArrayList<Integer> newList = new java.util.ArrayList<>();
+        newList.add(3);
+        newList.add(4);
+        newList.add(4);
+        newList.add(7);
+        boolean retained = list.retainAll(newList);
+        assertTrue("List size is 2", list.size() == 2);
+        assertTrue("Returned true", retained);
+        assertTrue("Contains 3", list.contains(3));
+        assertTrue("Contains 4", list.contains(4));
     }
 
     @Test
