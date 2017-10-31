@@ -4,11 +4,15 @@ import java.util.*;
 
 public class MyArrayList<T> implements List<T> {
     private int capacity = 8;
-    private int size = 0;
-    private Object[] data = new Object[capacity];
+    private int size;
+    private Object[] data;
 
     public int size() {
         return size;
+    }
+
+    public MyArrayList() {
+        this.data = new Object[capacity];
     }
 
     public boolean isEmpty() {
