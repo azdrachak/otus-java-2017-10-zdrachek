@@ -2,7 +2,7 @@ package com.github.azdrachak;
 
 import java.util.*;
 
-public class ArrayList<T> implements List<T> {
+public class MyArrayList<T> implements List<T> {
     private int capacity = 8;
     private int size = 0;
     private Object[] data = new Object[capacity];
@@ -30,8 +30,12 @@ public class ArrayList<T> implements List<T> {
         return result;
     }
 
+    @SuppressWarnings({"unchecked", "SuspiciousSystemArraycopy"})
     public <T1> T1[] toArray(T1[] a) {
-        return null;
+        if (a.length < size) return (T1[]) Arrays.copyOf(data, size, a.getClass());
+        System.arraycopy(data, 0, a, 0, size);
+        if (a.length > size) a[size] = null;
+        return a;
     }
 
     public boolean add(T t) {
@@ -164,7 +168,7 @@ public class ArrayList<T> implements List<T> {
     @SuppressWarnings("unchecked")
     public List<T> subList(int fromIndex, int toIndex) {
         if (fromIndex < 0 || toIndex > size) throw new IndexOutOfBoundsException();
-        List<T> sub = new ArrayList<>();
+        List<T> sub = new MyArrayList<>();
         for (int i = fromIndex; i < toIndex; i++) {
             sub.add((T) data[i]);
         }
@@ -203,7 +207,7 @@ public class ArrayList<T> implements List<T> {
             lastCalled = true;
             current = index;
             index++;
-            return (T) ArrayList.this.data[current];
+            return (T) MyArrayList.this.data[current];
         }
 
         @Override
@@ -218,7 +222,7 @@ public class ArrayList<T> implements List<T> {
             lastCalled = true;
             current = index - 1;
             index--;
-            return (T) ArrayList.this.data[current];
+            return (T) MyArrayList.this.data[current];
         }
 
         @Override
@@ -234,7 +238,7 @@ public class ArrayList<T> implements List<T> {
         @Override
         public void remove() {
             if (!lastCalled) throw new IllegalStateException();
-            ArrayList.this.remove(current);
+            MyArrayList.this.remove(current);
             lastCalled = false;
             index--;
         }
@@ -242,17 +246,17 @@ public class ArrayList<T> implements List<T> {
         @Override
         public void set(T t) {
             if (!lastCalled) throw new IllegalStateException();
-            ArrayList.this.set(current, t);
+            MyArrayList.this.set(current, t);
         }
 
         @Override
         public void add(T t) {
             if (!hasPrevious()) {
-                ArrayList.this.add(0, t);
+                MyArrayList.this.add(0, t);
             } else if (!hasNext()) {
-                ArrayList.this.add(t);
+                MyArrayList.this.add(t);
             } else {
-                ArrayList.this.add(current, t);
+                MyArrayList.this.add(current, t);
             }
             index++;
         }
