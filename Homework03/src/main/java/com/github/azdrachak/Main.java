@@ -11,11 +11,7 @@ public class Main {
         Stream.of(myArrayList.toArray()).forEach(x -> System.out.print(x + " "));
 
         MyArrayList<Integer> listCopy = new MyArrayList<>();
-        listCopy.add(0);
-        listCopy.add(0);
-        listCopy.add(0);
-        listCopy.add(0);
-        listCopy.add(0);
+        Collections.addAll(listCopy, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         Collections.copy(listCopy, myArrayList);
         System.out.println("\nTest copy from java.util.Collections");
         Stream.of(listCopy.toArray()).forEach(x -> System.out.print(x + " "));
