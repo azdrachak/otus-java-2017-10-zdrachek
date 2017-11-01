@@ -21,6 +21,9 @@ public class MyArrayList<T> implements List<T> {
 
     public boolean contains(Object o) {
         for (int i = 0; i < size; i++) {
+            if (o == null && data[i] == null) {
+                return true;
+            }
             if (data[i].equals(o)) {
                 return true;
             }
@@ -58,6 +61,10 @@ public class MyArrayList<T> implements List<T> {
 
     public boolean remove(Object o) {
         for (int i = 0; i < size; i++) {
+            if (o == null && data[i] == null) {
+                remove(i);
+                return true;
+            }
             if (data[i].equals(o)) {
                 remove(i);
                 return true;
@@ -179,10 +186,13 @@ public class MyArrayList<T> implements List<T> {
         return sub;
     }
 
+    @SuppressWarnings("unchecked")
     private void ensureCapacity() {
         if (capacity == size) {
             capacity *= 2;
-            System.arraycopy(data, 0, data, 0, capacity);
+            T[] oldData = (T[]) data;
+            data = new Object[capacity];
+            System.arraycopy(oldData, 0, data, 0, oldData.length);
         }
     }
 
@@ -264,5 +274,7 @@ public class MyArrayList<T> implements List<T> {
             }
             index++;
         }
+
+
     }
 }

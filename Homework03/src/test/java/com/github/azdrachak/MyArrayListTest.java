@@ -458,4 +458,17 @@ public class MyArrayListTest {
     public void testHasPreviousWhenEmptyCollection() {
         assertFalse("hasPrevious() is wrong.", listIterator.hasPrevious());
     }
+
+    @Test
+    public void testContainsNull() {
+        list.add(null);
+        assertTrue(list.contains(null));
+    }
+
+    @Test
+    public void testRemoveNull() {
+        list.add(null);
+        list.remove(null);
+        assertTrue(list.isEmpty());
+    }
 }
