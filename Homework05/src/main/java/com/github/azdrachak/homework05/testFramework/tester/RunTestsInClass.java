@@ -10,17 +10,10 @@ import java.util.List;
 
 public class RunTestsInClass {
     @SuppressWarnings("unchecked")
-    public static void runTests(String clazz)
+    public static void runTests(Class clazz)
             throws TooManyBeforeAnnotationsEsception, TooManyAfterAnnotationsEsception, NoTestsFoundException {
 
-        Class testClass = null;
-        try {
-            testClass = Class.forName(clazz);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        HashMap<String, List<Method>> methods = ReflectionHelper.getTestAnnotatedMethods(ReflectionHelper.instantiate(testClass));
+        HashMap<String, List<Method>> methods = ReflectionHelper.getTestAnnotatedMethods(clazz);
 
         if (methods.get("Before").size() > 1) throw new TooManyBeforeAnnotationsEsception();
         if (methods.get("After").size() > 1) throw new TooManyAfterAnnotationsEsception();
@@ -31,7 +24,7 @@ public class RunTestsInClass {
         List<Method> tests = methods.get("Test");
 
         for (Method test : tests) {
-            Object object = ReflectionHelper.instantiate(testClass);
+            Object object = ReflectionHelper.instantiate(clazz);
             if (before != null) ReflectionHelper.callMethod(object, before.getName());
             ReflectionHelper.callMethod(object, test.getName());
             if (after != null) ReflectionHelper.callMethod(object, after.getName());

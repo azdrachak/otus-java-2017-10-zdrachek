@@ -7,8 +7,8 @@ import com.github.azdrachak.homework05.testFramework.tester.RunTestsInClass;
 
 public class Main {
     public static void main(String[] args)
-            throws NoTestsFoundException, TooManyAfterAnnotationsEsception, TooManyBeforeAnnotationsEsception {
+            throws NoTestsFoundException, TooManyAfterAnnotationsEsception, TooManyBeforeAnnotationsEsception, ClassNotFoundException {
 
-        RunTestsInClass.runTests("com.github.azdrachak.homework05.test.MainTest");
+        RunTestsInClass.runTests(Class.forName("com.github.azdrachak.homework05.test.MainTest"));
     }
 }

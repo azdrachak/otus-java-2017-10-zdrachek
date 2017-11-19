@@ -89,17 +89,17 @@ class ReflectionHelper {
         return null;
     }
 
-    private static List<Method> getMethods(Object object) {
-        return Arrays.asList(object.getClass().getMethods());
+    private static List<Method> getMethods(Class clazz) {
+        return Arrays.asList(clazz.getMethods());
     }
 
     /**
      * Get methods annotated with @Before, @After, @Test annotations
-     * @param object object to get methods from
+     * @param clazz Class to get methods from
      * @return HashMap with keys (Before, After, Test) and lists of methods
      */
-    static HashMap<String, List<Method>> getTestAnnotatedMethods(Object object) {
-        List<Method> methods = getMethods(object);
+    static HashMap<String, List<Method>> getTestAnnotatedMethods(Class clazz) {
+        List<Method> methods = getMethods(clazz);
         HashMap<String, List<Method>> annotatedMethods = new HashMap<>();
         List<Method> afterMethods = new ArrayList<>();
         List<Method> beforeMethods = new ArrayList<>();
