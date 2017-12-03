@@ -34,11 +34,11 @@ class MoneySorterTest {
     @Test
     void putMoney() {
         MoneySorter.putMoney(container, moneyToAdd);
-        assertEquals(12, container.get100());
-        assertEquals(54, container.get500());
-        assertEquals(106, container.get1000());
-        assertEquals(208, container.get2000());
-        assertEquals(510, container.get5000());
+        assertEquals(12, container.get(RubleNominal.R100));
+        assertEquals(54, container.get(RubleNominal.R500));
+        assertEquals(106, container.get(RubleNominal.R1000));
+        assertEquals(208, container.get(RubleNominal.R2000));
+        assertEquals(510, container.get(RubleNominal.R5000));
     }
 
     @Test
@@ -48,11 +48,11 @@ class MoneySorterTest {
         } catch (InvalidMoneyAmount invalidMoneyAmount) {
             invalidMoneyAmount.printStackTrace();
         }
-        assertEquals(5, container.get100());
-        assertEquals(5, container.get500());
-        assertEquals(7, container.get1000());
-        assertEquals(9, container.get2000());
-        assertEquals(15, container.get5000());
+        assertEquals(5, container.get(RubleNominal.R100));
+        assertEquals(5, container.get(RubleNominal.R500));
+        assertEquals(7, container.get(RubleNominal.R1000));
+        assertEquals(9, container.get(RubleNominal.R2000));
+        assertEquals(15, container.get(RubleNominal.R5000));
     }
 
 }

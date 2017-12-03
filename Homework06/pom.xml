@@ -8,16 +8,38 @@
     <artifactId>Homework06</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
+        <junit.version>5.0.0-ALPHA</junit.version>
+        <org.junit.jupiter.version>5.0.1</org.junit.jupiter.version>
+    </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compiler.plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
     <dependencies>
         <dependency>
             <groupId>org.junit</groupId>
             <artifactId>junit-commons</artifactId>
-            <version>5.0.0-ALPHA</version>
+            <version>${junit.version}</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.0.1</version>
+            <version>${org.junit.jupiter.version}</version>
         </dependency>
     </dependencies>
+
 </project>

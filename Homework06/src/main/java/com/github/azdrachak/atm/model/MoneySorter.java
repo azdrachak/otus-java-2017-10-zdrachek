@@ -9,19 +9,19 @@ public class MoneySorter {
         for (RubleNominal rubleNominal : money.keySet()) {
             switch (rubleNominal) {
                 case R100:
-                    container.add100(money.get(rubleNominal));
+                    container.add(RubleNominal.R100, money.get(rubleNominal));
                     break;
                 case R500:
-                    container.add500(money.get(rubleNominal));
+                    container.add(RubleNominal.R500, money.get(rubleNominal));
                     break;
                 case R1000:
-                    container.add1000(money.get(rubleNominal));
+                    container.add(RubleNominal.R1000, money.get(rubleNominal));
                     break;
                 case R2000:
-                    container.add2000(money.get(rubleNominal));
+                    container.add(RubleNominal.R2000, money.get(rubleNominal));
                     break;
                 case R5000:
-                    container.add5000(money.get(rubleNominal));
+                    container.add(RubleNominal.R5000, money.get(rubleNominal));
                     break;
             }
         }
@@ -31,14 +31,14 @@ public class MoneySorter {
         if (money % 100 != 0 || money < 0) throw new InvalidMoneyAmount();
 
         int remainingMoney = money;
-        container.add5000(remainingMoney / 5000);
+        container.add(RubleNominal.R5000, remainingMoney / 5000);
         remainingMoney %= 5000;
-        container.add2000(remainingMoney / 2000);
+        container.add(RubleNominal.R2000, remainingMoney / 2000);
         remainingMoney %= 2000;
-        container.add1000(remainingMoney / 1000);
+        container.add(RubleNominal.R1000, remainingMoney / 1000);
         remainingMoney %= 1000;
-        container.add500(remainingMoney / 500);
+        container.add(RubleNominal.R500, remainingMoney / 500);
         remainingMoney %= 500;
-        container.add100(remainingMoney / 100);
+        container.add(RubleNominal.R100, remainingMoney / 100);
     }
 }
