@@ -12,9 +12,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MoneyCountTest {
     private MoneyContainer container;
+    private GetRemainingMoney grm;
 
     @BeforeEach
     void setUp() {
+        grm = new GetRemainingMoney();
         HashMap<RubleNominal, Integer> money = new HashMap<>();
         money.put(RubleNominal.R100, 10);
         money.put(RubleNominal.R500, 20);
@@ -26,12 +28,12 @@ class MoneyCountTest {
 
     @Test
     void getMoney() {
-        assertEquals(10 * 100 + 20 * 500 + 30 * 1000 + 40 * 2000 + 50 * 5000, GetRemainingMoney.getRemainingMoney(container));
+        assertEquals(10 * 100 + 20 * 500 + 30 * 1000 + 40 * 2000 + 50 * 5000, grm.getRemainingMoney(container));
     }
 
     @Test
     void getCashToDispense() throws NotEnoughMoney, InvalidMoneyAmount {
-        int initialSum = GetRemainingMoney.getRemainingMoney(container);
+        int initialSum = grm.getRemainingMoney(container);
         int sumToDispense = 11700;
         HashMap<RubleNominal, Integer> money = new HashMap<>();
         money.put(RubleNominal.R5000, 2);
@@ -39,7 +41,7 @@ class MoneyCountTest {
         money.put(RubleNominal.R500, 1);
         money.put(RubleNominal.R100, 2);
         assertEquals(money, MoneyCount.getCashToDispense(container, sumToDispense));
-        assertEquals(initialSum - sumToDispense, GetRemainingMoney.getRemainingMoney(container));
+        assertEquals(initialSum - sumToDispense, grm.getRemainingMoney(container));
     }
 
 }

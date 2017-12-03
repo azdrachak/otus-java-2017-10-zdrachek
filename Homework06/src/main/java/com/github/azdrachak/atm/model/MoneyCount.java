@@ -20,8 +20,9 @@ public class MoneyCount {
             throws InvalidMoneyAmount, NotEnoughMoney {
         HashMap<RubleNominal, Integer> dispenseMoney = new HashMap<>();
         int remainingSum = sumToDispense;
+        GetRemainingMoney grm = new GetRemainingMoney();
 
-        if (sumToDispense > GetRemainingMoney.getRemainingMoney(container)) throw new NotEnoughMoney();
+        if (sumToDispense > grm.getRemainingMoney(container)) throw new NotEnoughMoney();
         if (sumToDispense < 0 || sumToDispense % 100 != 0) throw new InvalidMoneyAmount();
 
         List<RubleNominal> nominals = new ArrayList<>(container.getMoney().keySet());

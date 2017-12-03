@@ -9,7 +9,7 @@ import com.github.azdrachak.atm.model.RubleNominal;
 import java.util.HashMap;
 
 public class GiveMoneyController {
-    public static HashMap<RubleNominal, Integer> dispenseMoney(MoneyContainer container, int sum) throws
+    public HashMap<RubleNominal, Integer> dispenseMoney(MoneyContainer container, int sum) throws
             NotEnoughMoney, InvalidMoneyAmount {
         return MoneyCount.getCashToDispense(container, sum);
     }

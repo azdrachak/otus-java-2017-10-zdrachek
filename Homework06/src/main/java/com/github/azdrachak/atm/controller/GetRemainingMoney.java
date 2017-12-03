@@ -4,7 +4,7 @@ import com.github.azdrachak.atm.model.MoneyContainer;
 import com.github.azdrachak.atm.model.MoneyCount;
 
 public class GetRemainingMoney {
-    public static int getRemainingMoney(MoneyContainer container) {
+    public int getRemainingMoney(MoneyContainer container) {
         return MoneyCount.getRemainingMoney(container);
     }
 }
