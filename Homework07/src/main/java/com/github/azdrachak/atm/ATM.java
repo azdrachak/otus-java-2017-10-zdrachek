@@ -62,10 +62,6 @@ public class ATM {
         return container.getMoney();
     }
 
-    public MoneyContainer getContainer() {
-        return container;
-    }
-
     public String getId() {
         return this.id;
     }

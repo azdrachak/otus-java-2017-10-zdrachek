@@ -24,12 +24,16 @@ public class ATMDepartment {
     public void restoreAll() {
         for (int i = 0; i < atms.size(); i++) {
             ATM atm = atms.get(i);
-            atms.set(i, originator.getMemento(stateKeeper.get(atm.getId()))) ;
+            atms.set(i, originator.getMemento(stateKeeper.get(atm.getId())));
         }
-        System.out.println("ATMs are restored to the initial state");
     }
 
     public void restoreById(String id) {
-        System.out.println("Restored " + id);
+        for (int i = 0; i < atms.size(); i++) {
+            if (atms.get(i).getId().equals(id)) {
+                atms.set(i, originator.getMemento(stateKeeper.get(id)));
+                break;
+            }
+        }
     }
 }
