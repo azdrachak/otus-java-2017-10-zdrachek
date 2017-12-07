@@ -12,10 +12,10 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("ATM Department");
 
-        ATM atm1 = new ATM(new MoneyContainer()).addMoney(100_000);
-        ATM atm2 = new ATM(new MoneyContainer()).addMoney(200_000);
-        ATM atm3 = new ATM(new MoneyContainer()).addMoney(300_000);
-        ATM atm4 = new ATM(new MoneyContainer()).addMoney(400_000);
+        ATM atm1 = new ATM("atm1", new MoneyContainer()).addMoney(111_100);
+        ATM atm2 = new ATM("atm2", new MoneyContainer()).addMoney(222_200);
+        ATM atm3 = new ATM("atm3", new MoneyContainer()).addMoney(333_300);
+        ATM atm4 = new ATM("atm4", new MoneyContainer()).addMoney(444_400);
 
         List<ATM> atms = new ArrayList<>(Arrays.asList(atm1, atm2, atm3, atm4));
 
@@ -30,7 +30,7 @@ public class Main {
         System.out.println("Money in the ATMs: " + department.getMoneySum());
 
         System.out.println("\nRestore ATMs state");
-        department.restore();
+        department.restoreAll();
         System.out.println("Money in the ATMs: " + department.getMoneySum());
     }
 }

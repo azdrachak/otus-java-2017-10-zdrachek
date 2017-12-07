@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class Main {
     public static void main(String[] args) {
         MoneyContainer container = new MoneyContainer();
-        ATM atm = new ATM(container);
+        ATM atm = new ATM("ATM", container);
 
         atm.showRemainingSum();
 

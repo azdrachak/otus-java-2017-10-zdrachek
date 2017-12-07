@@ -14,14 +14,16 @@ import java.util.HashMap;
 public class ATM {
 
     private MoneyContainer container;
+    private String id;
 
     private GetRemainingMoney getRemainingMoney = new GetRemainingMoney();
     private GiveMoneyController giveMoneyController = new GiveMoneyController();
     private AddMoneyController addMoneyController = new AddMoneyController();
     private ShowResultsView showResultsView = new ShowResultsView();
 
-    public ATM(MoneyContainer container) {
+    public ATM(String id, MoneyContainer container) {
         this.container = container;
+        this.id = id;
     }
 
     @SuppressWarnings("WeakerAccess")
@@ -54,5 +56,17 @@ public class ATM {
 
     public void showDispensedMoney(HashMap<RubleNominal, Integer> money) {
         showResultsView.showDispensedMoney(money);
+    }
+
+    public HashMap<RubleNominal, Integer> getMoney() {
+        return container.getMoney();
+    }
+
+    public MoneyContainer getContainer() {
+        return container;
+    }
+
+    public String getId() {
+        return this.id;
     }
 }

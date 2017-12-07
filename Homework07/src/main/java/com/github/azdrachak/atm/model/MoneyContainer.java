@@ -17,7 +17,7 @@ public class MoneyContainer {
         this.money = money;
     }
 
-    HashMap<RubleNominal, Integer> getMoney() {
+    public HashMap<RubleNominal, Integer> getMoney() {
         return money;
     }
 
