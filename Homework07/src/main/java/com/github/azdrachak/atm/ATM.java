@@ -20,7 +20,7 @@ public class ATM {
     private AddMoneyController addMoneyController = new AddMoneyController();
     private ShowResultsView showResultsView = new ShowResultsView();
 
-    ATM(MoneyContainer container) {
+    public ATM(MoneyContainer container) {
         this.container = container;
     }
 
@@ -29,15 +29,17 @@ public class ATM {
         return getRemainingMoney.getRemainingMoney(container);
     }
 
-    public void addMoney(MoneyContainer container, HashMap<RubleNominal, Integer> money) {
+    public ATM addMoney(HashMap<RubleNominal, Integer> money) {
         addMoneyController.addMoney(container, money);
+        return this;
     }
 
-    public void addMoney(MoneyContainer container, int amount) {
+    public ATM addMoney(int amount) {
         addMoneyController.addMoney(container, amount);
+        return this;
     }
 
-    public HashMap<RubleNominal, Integer> dispenseMoney(MoneyContainer container, int sum) {
+    public HashMap<RubleNominal, Integer> dispenseMoney(int sum) {
         try {
             return giveMoneyController.dispenseMoney(container, sum);
         } catch (NotEnoughMoney | InvalidMoneyAmount e) {

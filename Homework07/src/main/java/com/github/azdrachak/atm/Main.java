@@ -16,15 +16,15 @@ public class Main {
         money.put(RubleNominal.R100, 5);
 
         System.out.println("Add 5 100 rubles banknotes");
-        atm.addMoney(container, money);
+        atm.addMoney(money);
         atm.showRemainingSum();
 
         System.out.println("Add 25700 rubles");
-        atm.addMoney(container, 25700);
+        atm.addMoney(25700);
         atm.showRemainingSum();
 
         System.out.println("Dispense 6800 rubles");
-        HashMap<RubleNominal, Integer> dispensedMoney = atm.dispenseMoney(container, 6800);
+        HashMap<RubleNominal, Integer> dispensedMoney = atm.dispenseMoney(6800);
         atm.showDispensedMoney(dispensedMoney);
         atm.showRemainingSum();
     }
