@@ -3,13 +3,21 @@ package com.github.azdrachak.json;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
+import javax.json.JsonWriter;
+import java.io.StringWriter;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.*;
 
 public class ObjectToJson {
     public static String object2json(Object object) {
-        return jsonObjectBuilder(object).build().toString();
+        StringWriter writer = new StringWriter();
+
+        try (JsonWriter jsonWriter = Json.createWriter(writer)) {
+            jsonWriter.writeObject(jsonObjectBuilder(object).build());
+        }
+
+        return writer.toString();
     }
 
     private static JsonObjectBuilder jsonObjectBuilder(Object object) {
