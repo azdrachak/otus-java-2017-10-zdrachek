@@ -1,10 +1,8 @@
 package com.github.azdrachak.json;
 
-import javax.json.Json;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObjectBuilder;
-import javax.json.JsonWriter;
+import javax.json.*;
 import java.io.StringWriter;
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.*;
@@ -22,6 +20,7 @@ public class ObjectToJson {
 
     private static JsonObjectBuilder jsonObjectBuilder(Object object) {
         JsonObjectBuilder builder = Json.createObjectBuilder();
+
         List<Field> fields = getFields(object.getClass());
 
         for (Field field : fields) {
@@ -33,23 +32,7 @@ public class ObjectToJson {
 
             if (Modifier.isTransient(field.getModifiers())) continue;
 
-            if (obj == null) {
-                builder.addNull(fieldName);
-            } else if (type.isPrimitive()) {
-                if (obj instanceof Byte) builder.add(fieldName, (byte) obj);
-                else if (obj instanceof Short) builder.add(fieldName, (short) obj);
-                else if (obj instanceof Integer) builder.add(fieldName, (int) obj);
-                else if (obj instanceof Long) builder.add(fieldName, (long) obj);
-                else if (obj instanceof Float) builder.add(fieldName, (float) obj);
-                else if (obj instanceof Double) builder.add(fieldName, (double) obj);
-                else if (obj instanceof Boolean) builder.add(fieldName, (boolean) obj);
-                else if (obj instanceof Character) builder.add(fieldName, (char) obj);
-            } else if (obj instanceof String) builder.add(fieldName, (String) obj);
-            else if (type.isArray()) builder.add(fieldName, arrayBuilder((Object[]) obj));
-            else if (Collection.class.isAssignableFrom(type)) {
-                obj = ((Collection) obj).toArray();
-                builder.add(fieldName, arrayBuilder((Object[]) obj));
-            } else builder.add(fieldName, object2json(obj));
+            addObjectToBuilder(obj, fieldName, type, builder);
 
         }
         return builder;
@@ -59,11 +42,49 @@ public class ObjectToJson {
         return new ArrayList<>(Arrays.asList(type.getDeclaredFields()));
     }
 
-    private static JsonArrayBuilder arrayBuilder(Object[] arr) {
+    private static JsonArrayBuilder arrayBuilder(Object array) {
         JsonArrayBuilder builder = Json.createArrayBuilder();
-        for (Object o : arr) {
-            builder.add(jsonObjectBuilder(o));
+        for (int i = 0; i < Array.getLength(array); i++) {
+            Object object = Array.get(array, i);
+            if (isFiniteObject(object)) {
+                if (object instanceof Byte) builder.add((byte) object);
+                else if (object instanceof Short) builder.add((short) object);
+                else if (object instanceof Integer) builder.add((int) object);
+                else if (object instanceof Long) builder.add((long) object);
+                else if (object instanceof Float) builder.add((float) object);
+                else if (object instanceof Double) builder.add((double) object);
+                else if (object instanceof Boolean) builder.add((boolean) object);
+                else if (object instanceof Character || object instanceof String) builder.add(object.toString());
+            } else {
+                builder.add(jsonObjectBuilder(object));
+            }
         }
         return builder;
     }
+
+    private static boolean isFiniteObject(Object obj) {
+        return obj instanceof Number
+                || obj instanceof Character
+                || obj instanceof Boolean
+                || obj instanceof String;
+    }
+
+    private static void addObjectToBuilder(Object obj, String fieldName, Class type, JsonObjectBuilder builder) {
+        if (obj == null) builder.addNull(fieldName);
+        else if (isFiniteObject(obj)) {
+            if (obj instanceof Byte) builder.add(fieldName, (byte) obj);
+            else if (obj instanceof Short) builder.add(fieldName, (short) obj);
+            else if (obj instanceof Integer) builder.add(fieldName, (int) obj);
+            else if (obj instanceof Long) builder.add(fieldName, (long) obj);
+            else if (obj instanceof Float) builder.add(fieldName, (float) obj);
+            else if (obj instanceof Double) builder.add(fieldName, (double) obj);
+            else if (obj instanceof Boolean) builder.add(fieldName, (boolean) obj);
+            else if (obj instanceof Character || obj instanceof String) builder.add(fieldName, obj.toString());
+        } else if (type.isArray()) builder.add(fieldName, arrayBuilder(obj));
+        else if (Collection.class.isAssignableFrom(type)) {
+            obj = ((Collection) obj).toArray();
+            builder.add(fieldName, arrayBuilder((obj)));
+        } else builder.add(fieldName, object2json(obj));
+    }
+
 }

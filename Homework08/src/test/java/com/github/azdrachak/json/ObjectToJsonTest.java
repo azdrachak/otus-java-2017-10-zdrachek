@@ -18,7 +18,7 @@ class ObjectToJsonTest {
         String jsonArray = ObjectToJson.object2json(array);
         String gString = gson.toJson(array);
 
-        assertEquals(jsonArray, gString);
+        assertEquals(gString, jsonArray);
     }
 
     @Test
@@ -29,7 +29,7 @@ class ObjectToJsonTest {
         String jsonArray = ObjectToJson.object2json(collectionClass);
         String gString = gson.toJson(collectionClass);
 
-        assertEquals(jsonArray, gString);
+        assertEquals(gString, jsonArray);
     }
 
     @Test

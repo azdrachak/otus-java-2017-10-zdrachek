@@ -9,6 +9,7 @@ public class SampleClass {
     public double aDouble= 6.6;
     public boolean aBoolean = true;
     public String string = "String";
+    public char aChar = 'a';
 
     private int privateInt = 99;
 
@@ -29,6 +30,7 @@ public class SampleClass {
         if (anInt != that.anInt) return false;
         if (!string.equals(that.string)) return false;
         if (privateInt != that.privateInt) return false;
+        if (aChar != that.aChar) return false;
         return true;
     }
 }
