@@ -1,21 +1,14 @@
 package com.github.azdrachak.json;
 
 import javax.json.*;
-import java.io.StringWriter;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.*;
 
 public class ObjectToJson {
-    public static String object2json(Object object) {
-        StringWriter writer = new StringWriter();
-
-        try (JsonWriter jsonWriter = Json.createWriter(writer)) {
-            jsonWriter.writeObject(jsonObjectBuilder(object).build());
-        }
-
-        return writer.toString();
+    public static JsonObject object2json(Object object) {
+        return jsonObjectBuilder(object).build();
     }
 
     private static JsonObjectBuilder jsonObjectBuilder(Object object) {
@@ -86,5 +79,4 @@ public class ObjectToJson {
             builder.add(fieldName, arrayBuilder((obj)));
         } else builder.add(fieldName, object2json(obj));
     }
-
 }

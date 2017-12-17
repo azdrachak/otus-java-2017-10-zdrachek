@@ -15,7 +15,7 @@ class ObjectToJsonTest {
         Gson gson = new Gson();
         SampleArrayClass array = new SampleArrayClass();
 
-        String jsonArray = ObjectToJson.object2json(array);
+        String jsonArray = String.valueOf(ObjectToJson.object2json(array));
         String gString = gson.toJson(array);
 
         assertEquals(gString, jsonArray);
@@ -26,7 +26,7 @@ class ObjectToJsonTest {
         Gson gson = new Gson();
         SampleCollectionClass collectionClass = new SampleCollectionClass();
 
-        String jsonArray = ObjectToJson.object2json(collectionClass);
+        String jsonArray = String.valueOf(ObjectToJson.object2json(collectionClass));
         String gString = gson.toJson(collectionClass);
 
         assertEquals(gString, jsonArray);
@@ -37,7 +37,7 @@ class ObjectToJsonTest {
         Gson gson = new Gson();
         SampleClass sampleClass = new SampleClass();
 
-        String jsonClass = ObjectToJson.object2json(sampleClass);
+        String jsonClass = String.valueOf(ObjectToJson.object2json(sampleClass));
         SampleClass gclass = gson.fromJson(jsonClass, SampleClass.class);
 
         assertEquals(sampleClass, gclass);
