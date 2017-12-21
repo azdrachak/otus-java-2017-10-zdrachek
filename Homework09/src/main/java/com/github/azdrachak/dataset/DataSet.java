@@ -1,5 +1,5 @@
 package com.github.azdrachak.dataset;
 
-abstract class DataSet {
+public abstract class DataSet {
     long id;
 }
