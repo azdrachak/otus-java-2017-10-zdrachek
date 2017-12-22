@@ -1,6 +1,7 @@
 package com.github.azdrachak.database;
 
 import com.github.azdrachak.dataset.UserDataSet;
+import com.github.azdrachak.executor.Executor;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -17,13 +18,14 @@ public class DBServiceImpl implements DBService {
     private final String SELECT_ALL_USERS = "SELECT * FROM `user`";
     private final String SELECT_USER_BY_ID = "SELECT * FROM `user` WHERE `id`=%s";
 
-    DBServiceImpl(Connection connection) {
+    public DBServiceImpl(Connection connection) {
         this.connection = connection;
     }
 
     @Override
     public void prepareTables() throws SQLException {
-
+        Executor executor = new Executor(connection);
+        executor.execUpdate(CREATE_TABLE_IF_NOT_EXISTS);
     }
 
     @Override

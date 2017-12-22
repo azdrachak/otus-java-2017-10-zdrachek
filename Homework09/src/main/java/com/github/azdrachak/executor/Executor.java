@@ -26,6 +26,12 @@ public class Executor {
         }
     }
 
+    public void execUpdate(String query) throws SQLException {
+        try (Statement statement = connection.createStatement();) {
+            statement.execute(query);
+        }
+    }
+
     //TODO implement save to DB
     public <T extends DataSet> void save(T user) {
     }
