@@ -1,11 +1,9 @@
 package com.github.azdrachak.executor;
 
 import com.github.azdrachak.dataset.DataSet;
+import com.github.azdrachak.reflection.ReflectionHelper;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Executor {
     private final Connection connection;
@@ -14,30 +12,47 @@ public class Executor {
         this.connection = connection;
     }
 
-    public Connection getConnection() {
-        return this.connection;
-    }
-
-    public void execQuery(String query, ResultHandler handler) throws SQLException {
+    public void createUserTable() throws SQLException {
+        //language=SQL
+        String query = "CREATE TABLE IF NOT EXISTS `user` (" +
+                " `id` BIGINT(20) NOT NULL AUTO_INCREMENT," +
+                " `name` VARCHAR(255) NOT NULL DEFAULT '0'," +
+                " `age` INT(3) NOT NULL DEFAULT '0'," +
+                " PRIMARY KEY (`id`)" +
+                ")";
         try (Statement statement = connection.createStatement()) {
             statement.execute(query);
+        }
+    }
+
+    public <T extends DataSet> void save(T user) throws SQLException {
+        //language=SQL
+        String query = "INSERT INTO `homework09`.`user` (`name`, `age`) VALUES ('%s', '%s');";
+
+        String name = (String) ReflectionHelper.getFieldValue(user, "name");
+        int age = (int) ReflectionHelper.getFieldValue(user, "age");
+
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(String.format(query, name, age));
+        }
+    }
+
+    public <T extends DataSet> T load(Long id, Class<T> clazz) throws SQLException {
+        //language=SQL
+        String query = "SELECT * FROM `user` WHERE `id`=%s";
+
+        String name = "";
+        Integer age = 0;
+        boolean hasRecord = false;
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(String.format(query, id));
             ResultSet resultSet = statement.getResultSet();
-            handler.handle(resultSet);
+            if (resultSet.next()) {
+                hasRecord = true;
+                name = resultSet.getString("name");
+                age = resultSet.getInt("age");
+            }
         }
-    }
-
-    public void execUpdate(String query) throws SQLException {
-        try (Statement statement = connection.createStatement();) {
-            statement.execute(query);
-        }
-    }
-
-    //TODO implement save to DB
-    public <T extends DataSet> void save(T user) {
-    }
-
-    //TODO implement load from DB to class
-    <T extends DataSet> T load(long id, Class<T> clazz) {
-        return null;
+        return hasRecord ? ReflectionHelper.instantiate(clazz, id, name, age) : null;
     }
 }

@@ -5,7 +5,13 @@ public class UserDataSet extends DataSet {
 
     private final int age;
 
-    public UserDataSet(long id, String name, int age) {
+    public UserDataSet(String name, Integer age) {
+        this.id = 0;
+        this.name = name;
+        this.age = age;
+    }
+
+    public UserDataSet(Long id, String name, Integer age) {
         this.id = id;
         this.name = name;
         this.age = age;
