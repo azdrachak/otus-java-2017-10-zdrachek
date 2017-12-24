@@ -20,38 +20,42 @@ public class Executor {
                 " `age` INT(3) NOT NULL DEFAULT '0'," +
                 " PRIMARY KEY (`id`)" +
                 ")";
-        try (Statement statement = connection.createStatement()) {
-            statement.execute(query);
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.execute();
         }
     }
 
     public <T extends DataSet> void save(T user) throws SQLException {
         //language=SQL
-        String query = "INSERT INTO `homework09`.`user` (`name`, `age`) VALUES ('%s', '%s');";
+        String query = "INSERT INTO `homework09`.`user` (`name`, `age`) VALUES (?, ?);";
 
         String name = (String) ReflectionHelper.getFieldValue(user, "name");
         int age = (int) ReflectionHelper.getFieldValue(user, "age");
 
-        try (Statement statement = connection.createStatement()) {
-            statement.execute(String.format(query, name, age));
+        try (PreparedStatement statement = connection.prepareStatement(String.format(query, name, age))) {
+            statement.setString(1, name);
+            statement.setString(2, String.valueOf(age));
+            statement.execute();
         }
     }
 
     public <T extends DataSet> T load(Long id, Class<T> clazz) throws SQLException {
         //language=SQL
-        String query = "SELECT * FROM `user` WHERE `id`=%s";
+        String query = "SELECT * FROM `user` WHERE `id`=?";
 
         String name = "";
         Integer age = 0;
         boolean hasRecord = false;
-        try (Statement statement = connection.createStatement()) {
-            statement.execute(String.format(query, id));
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, "1");
+            statement.execute();
             ResultSet resultSet = statement.getResultSet();
             if (resultSet.next()) {
                 hasRecord = true;
                 name = resultSet.getString("name");
                 age = resultSet.getInt("age");
             }
+            resultSet.close();
         }
         return hasRecord ? ReflectionHelper.instantiate(clazz, id, name, age) : null;
     }
